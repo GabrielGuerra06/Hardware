@@ -1,14 +1,14 @@
 {
   "project_info": {
-    "project_number": "974147937570",
-    "firebase_url": "https://peliculas-84472-default-rtdb.firebaseio.com",
-    "project_id": "peliculas-84472",
-    "storage_bucket": "peliculas-84472.appspot.com"
+    "project_number": "632915214029",
+    "firebase_url": "https://miboletoexpress-default-rtdb.firebaseio.com",
+    "project_id": "miboletoexpress",
+    "storage_bucket": "miboletoexpress.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:974147937570:android:2148262105ee2c31dbb17b",
+        "mobilesdk_app_id": "1:632915214029:android:af45d3acf9b5c3cbd03384",
         "android_client_info": {
           "package_name": "com.example.hardware"
         }
@@ -16,26 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAtE-dWTJrPM5Gf03EwEfMsGAWCMOHZ1vw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:974147937570:android:931a6200d1efd4c6dbb17b",
-        "android_client_info": {
-          "package_name": "com.example.peliculas"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAtE-dWTJrPM5Gf03EwEfMsGAWCMOHZ1vw"
+          "current_key": "AIzaSyAyeaeoE5Wkyd-W5_VmhD_3NZEdXEnrCw4"
         }
       ],
       "services": {
