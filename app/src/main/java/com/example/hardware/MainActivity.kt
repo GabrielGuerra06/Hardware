@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import android.util.Log
 
 class MainActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
@@ -68,26 +69,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkQRCodeStatus(qrContent: String) {
-        database.child(qrContent).get().addOnSuccessListener { snapshot ->
+        Log.d("MainActivity", "Iniciando checkQRCodeStatus con QR content: $qrContent")
+        database.get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
-                val status = snapshot.child("status").getValue(String::class.java)
-                when (status) {
-                    "libre" -> {
-                        database.child(qrContent).child("status").setValue("QR utilizado")
-                        Toast.makeText(this, "Buen viaje", Toast.LENGTH_LONG).show()
-                    }
-                    "QR utilizado" -> {
-                        Toast.makeText(this, "QR utilizado, Genere un nuevo QR para ingresar", Toast.LENGTH_LONG).show()
-                    }
-                    else -> {
-                        Toast.makeText(this, "Estado desconocido", Toast.LENGTH_LONG).show()
+                Log.d("MainActivity", "Datos obtenidos del snapshot: ${snapshot.value}")
+                var qrFound = false
+                for (childSnapshot in snapshot.children) {
+                    val qrKey = childSnapshot.key
+                    val status = childSnapshot.child("status").getValue(String::class.java)
+                    Log.d("MainActivity", "QR Key: $qrKey, Estado: $status")
+                    if (qrKey == qrContent) {
+                        qrFound = true
+                        when (status) {
+                            "qr generado" -> {
+                                childSnapshot.child("status").ref.setValue("qr utilizado")
+                                Toast.makeText(this, "Buen viaje", Toast.LENGTH_LONG).show()
+                            }
+                            "qr utilizado" -> {
+                                Toast.makeText(this, "QR utilizado, Genere un nuevo QR para ingresar", Toast.LENGTH_LONG).show()
+                            }
+                            else -> {
+                                Toast.makeText(this, "Estado desconocido", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                        break
                     }
                 }
+                if (!qrFound) {
+                    Toast.makeText(this, "Código QR no encontrado", Toast.LENGTH_LONG).show()
+                }
             } else {
+                Log.d("MainActivity", "Snapshot no existe o está vacío")
                 Toast.makeText(this, "Código QR no encontrado", Toast.LENGTH_LONG).show()
             }
         }.addOnFailureListener {
             Toast.makeText(this, "Error al leer el QR: ${it.message}", Toast.LENGTH_LONG).show()
+            Log.e("MainActivity", "Error al leer el QR: ${it.message}")
         }
     }
 }
